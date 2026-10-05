@@ -35,9 +35,13 @@
   <div class="alert alert-danger" role="alert">Flights could not be loaded. Please try again.</div>
   <button type="button" class="btn btn-default" (click)="flightsResource.reload()">Retry</button>
 }
+<label><input type="checkbox" [formField]="filterForm.onlyDelayed" /> Only delayed flights</label>
 @if (flightsResource.hasValue()) {
   <div class="row">
-    @for (flight of flightsResource.value(); track flight.id) {
+    @for (
+      flight of flightsResource.value() | statusFilter: filterModel().onlyDelayed;
+      track flight.id
+    ) {
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <app-flight-card
           [item]="flight"

@@ -1,5 +1,6 @@
 import { firstValueFrom } from 'rxjs';
 import { FormField, FormRoot, form } from '@angular/forms/signals';
+import { StatusFilterPipe } from '../shared/pipes/status-filter-pipe';
 import { FlightCard } from '../flight-card/flight-card';
 import { FlightService } from './flight-service';
 import { Component, computed, effect, inject, signal } from '@angular/core';
@@ -7,7 +8,7 @@ import { Flight, FlightFilter, initialFlight } from '../model/flight';
 
 @Component({
   selector: 'app-flight-search',
-  imports: [FlightCard, FormField, FormRoot],
+  imports: [FlightCard, StatusFilterPipe, FormField, FormRoot],
   templateUrl: './flight-search.html',
   styleUrl: './flight-search.scss',
 })
@@ -17,6 +18,8 @@ export class FlightSearch {
     submission: { action: async () => this.search() },
   });
   protected readonly query = signal<FlightFilter | undefined>(undefined);
+  protected readonly filterModel = signal({ onlyDelayed: false });
+  protected readonly filterForm = form(this.filterModel);
   protected readonly basket = signal<Record<number, boolean>>({});
   protected readonly flightRoute = computed(
     () => `From ${this.searchModel().from} to ${this.searchModel().to}.`,

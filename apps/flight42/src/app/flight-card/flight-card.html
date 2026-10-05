@@ -5,15 +5,17 @@
 >
   <div class="card-header">
     <h2 class="card-title" [id]="'flight-title-' + item().id">
-      {{ item().from }} - {{ item().to }}
+      {{ item().from | city }} - {{ item().to | city }}
     </h2>
     <ng-content select=".content-title" />
   </div>
   <div class="card-body">
     <p>Flight No.: {{ item().id }}</p>
     @if (showDetails()) {
-      <p>Date: {{ item().date }}</p>
-      <p>Delayed: {{ item().delayed ? 'Yes' : 'No' }}</p>
+      <p>Date: {{ item().date | date: 'dd.MM.yyyy HH:mm' }}</p>
+      <p [style.color]="item().delayed | statusColor">
+        Delayed: {{ item().delayed ? 'Yes' : 'No' }}
+      </p>
     }
     <ng-content />
     <button
