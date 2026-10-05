@@ -1,10 +1,16 @@
-<nav
-  class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent"
->
+<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
   <div class="container-fluid">
     <div class="navbar-wrapper">
       <div class="navbar-toggle">
-        <button #menuToggle type="button" class="navbar-toggler" aria-label="Toggle navigation" aria-controls="app-sidebar" [attr.aria-expanded]="sidebarVisible()" (click)="toggleSidebar()">
+        <button
+          #menuToggle
+          type="button"
+          class="navbar-toggler"
+          aria-label="Toggle navigation"
+          aria-controls="app-sidebar"
+          [attr.aria-expanded]="sidebarVisible()"
+          (click)="toggleSidebar()"
+        >
           <span class="navbar-toggler-bar bar1"></span>
           <span class="navbar-toggler-bar bar2"></span>
           <span class="navbar-toggler-bar bar3"></span>
@@ -17,23 +23,22 @@
       type="button"
       (click)="toggleSidebar()"
       [attr.aria-expanded]="sidebarVisible()"
-      aria-controls="app-sidebar" aria-label="Toggle navigation options"
+      aria-controls="app-sidebar"
+      aria-label="Toggle navigation options"
     >
       <span class="navbar-toggler-bar navbar-kebab"></span>
       <span class="navbar-toggler-bar navbar-kebab"></span>
       <span class="navbar-toggler-bar navbar-kebab"></span>
     </button>
-    <div
-      class="collapse navbar-collapse justify-content-end"
-      id="collapseExample"
-    >
+    <div class="collapse navbar-collapse justify-content-end" id="collapseExample">
       <form>
         <div class="input-group no-border">
           <input
             type="text"
             value=""
             class="form-control"
-            placeholder="Search..." aria-label="Search"
+            placeholder="Search..."
+            aria-label="Search"
           />
           <div class="input-group-append">
             <div class="input-group-text">
@@ -59,10 +64,7 @@
               <span class="d-lg-none d-md-block">Some Actions</span>
             </p>
           </a>
-          <div
-            aria-labelledby="navbarDropdownMenuLink"
-            class="dropdown-menu dropdown-menu-right"
-          >
+          <div aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu dropdown-menu-right">
             <a href="javascript:void(0)">Action</a>
             <a href="javascript:void(0)">Another action</a>
             <a href="javascript:void(0)">Something else here</a>

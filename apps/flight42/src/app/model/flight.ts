@@ -1,0 +1,20 @@
+export interface Flight {
+  id: number;
+  from: string;
+  to: string;
+  date: string;
+  delayed: boolean;
+}
+
+export interface FlightFilter {
+  from: string;
+  to: string;
+}
+
+export const initialFlight: Flight = {
+  id: 0,
+  from: '',
+  to: '',
+  date: '',
+  delayed: false,
+};

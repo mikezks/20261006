@@ -17,7 +17,7 @@ export class Headerbar {
   }
 
   protected toggleSidebar(): void {
-    this.sidebarVisible.update(visible => !visible);
+    this.sidebarVisible.update((visible) => !visible);
     this.document.body.classList.toggle('nav-open', this.sidebarVisible());
   }
 
