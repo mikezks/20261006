@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Flight } from '../../model/flight';
+import { Flight } from '../../booking/model/flight';
 
 @Pipe({ name: 'statusFilter' })
 export class StatusFilterPipe implements PipeTransform {

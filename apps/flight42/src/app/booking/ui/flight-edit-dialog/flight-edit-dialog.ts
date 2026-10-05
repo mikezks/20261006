@@ -5,8 +5,8 @@ import {
   MatDialogTitle,
   MatDialogContent,
 } from '@angular/material/dialog';
-import { Flight } from '../model/flight';
-import { FlightEdit } from '../flight-edit/flight-edit';
+import { Flight } from '../../model/flight';
+import { FlightEdit } from '../../features/flight-edit/flight-edit';
 
 @Component({
   selector: 'app-flight-edit-dialog',

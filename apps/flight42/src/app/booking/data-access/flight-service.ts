@@ -2,7 +2,7 @@ import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Service, Signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Flight, FlightFilter } from '../model/flight';
-import { ConfigService } from '../shared/config-service';
+import { ConfigService } from '../../shared/config-service';
 
 @Service()
 export class FlightService {

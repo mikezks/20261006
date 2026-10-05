@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FlightSearch } from './flight-search/flight-search';
-import { Headerbar } from './headerbar/headerbar';
-import { Sidebar } from './sidebar/sidebar';
+import { FlightSearch } from './booking/features/flight-search/flight-search';
+import { Headerbar } from './core/headerbar/headerbar';
+import { Sidebar } from './core/sidebar/sidebar';
 
 @Component({
   selector: 'app-root',

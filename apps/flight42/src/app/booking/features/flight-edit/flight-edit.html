@@ -10,9 +10,7 @@
     />
     <div id="from-errors" class="field-error" aria-live="polite">
       @if (editForm.from().touched()) {
-        @for (error of editForm.from().errors(); track $index) {
-          <p>{{ error.message }}</p>
-        }
+        <app-validation-errors [errors]="editForm.from().errors()" />
       }
     </div>
   </div>
@@ -26,9 +24,7 @@
     />
     <div id="to-errors" class="field-error" aria-live="polite">
       @if (editForm.to().touched()) {
-        @for (error of editForm.to().errors(); track $index) {
-          <p>{{ error.message }}</p>
-        }
+        <app-validation-errors [errors]="editForm.to().errors()" />
       }
     </div>
   </div>
@@ -42,9 +38,7 @@
     />
     <div id="date-errors" class="field-error" aria-live="polite">
       @if (editForm.date().touched()) {
-        @for (error of editForm.date().errors(); track $index) {
-          <p>{{ error.message }}</p>
-        }
+        <app-validation-errors [errors]="editForm.date().errors()" />
       }
     </div>
   </div>

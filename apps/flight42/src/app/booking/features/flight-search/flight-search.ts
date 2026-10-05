@@ -1,11 +1,11 @@
 import { FormField, FormRoot, form } from '@angular/forms/signals';
 import { MatDialog } from '@angular/material/dialog';
-import { FlightEditDialog } from '../flight-edit-dialog/flight-edit-dialog';
-import { StatusFilterPipe } from '../shared/pipes/status-filter-pipe';
-import { FlightCard } from '../flight-card/flight-card';
-import { FlightService } from './flight-service';
+import { FlightEditDialog } from '../../ui/flight-edit-dialog/flight-edit-dialog';
+import { StatusFilterPipe } from '../../../shared/pipes/status-filter-pipe';
+import { FlightCard } from '../../ui/flight-card/flight-card';
+import { FlightService } from '../../data-access/flight-service';
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { Flight, FlightFilter } from '../model/flight';
+import { Flight, FlightFilter } from '../../model/flight';
 
 @Component({
   selector: 'app-flight-search',

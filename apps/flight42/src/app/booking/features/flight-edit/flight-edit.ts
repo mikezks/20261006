@@ -1,19 +1,14 @@
 import { firstValueFrom } from 'rxjs';
+import { flightSchema } from '../../../shared/validation/flight-schema';
+import { ValidationErrors } from '../../../shared/validation-errors/validation-errors';
 import { Component, inject, model, output, signal } from '@angular/core';
-import { FormField, FormRoot, form, minLength, required, schema } from '@angular/forms/signals';
-import { Flight, initialFlight } from '../model/flight';
-import { FlightService } from '../flight-search/flight-service';
-
-export const flightSchema = schema<Flight>((path) => {
-  required(path.from, { message: 'Enter a departure city.' });
-  minLength(path.from, 3, { message: 'Use at least three characters.' });
-  required(path.to, { message: 'Enter a destination.' });
-  required(path.date, { message: 'Enter an ISO date and time.' });
-});
+import { FormField, FormRoot, form } from '@angular/forms/signals';
+import { Flight, initialFlight } from '../../model/flight';
+import { FlightService } from '../../data-access/flight-service';
 
 @Component({
   selector: 'app-flight-edit',
-  imports: [FormField, FormRoot],
+  imports: [FormField, FormRoot, ValidationErrors],
   templateUrl: './flight-edit.html',
   styleUrl: './flight-edit.scss',
 })
