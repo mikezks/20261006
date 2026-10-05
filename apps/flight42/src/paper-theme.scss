@@ -1,0 +1,3 @@
+// Load the legacy theme as a package dependency so Angular's quietDeps applies.
+// Deprecation warnings in our own SCSS remain visible.
+@use '@angular-architects/paper-design/assets/scss/paper-dashboard';

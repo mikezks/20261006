@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+
+.selected {
+  background-color: rgb(204, 197, 185);
+}
+
+// Shell styles from the 20260929 workshop.
+.nav a,
+.nav a:visited {
+  text-decoration: underline;
+  color: black;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+  color: darkgoldenrod;
+}
+
+.main-panel {
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar .nav,
+.nav {
+  li > a {
+    line-height: 30px;
+
+    &:not([href]) {
+      user-select: none;
+    }
+
+    > p {
+      font-size: 12px;
+    }
+
+    > i.icon {
+      font-size: 24px;
+    }
+  }
+}
