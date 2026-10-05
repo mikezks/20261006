@@ -1,6 +1,6 @@
 import { firstValueFrom } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { HttpClient, httpResource } from '@angular/common/http';
+import { FlightService } from './flight-service';
 import { Component, inject, signal } from '@angular/core';
 import { FormField, FormRoot, form } from '@angular/forms/signals';
 import { Flight, FlightFilter, initialFlight } from '../model/flight';
@@ -27,17 +27,8 @@ export class FlightSearch {
   });
   protected readonly message = signal('');
   protected readonly saveError = signal('');
-  private readonly http = inject(HttpClient);
-
-  protected readonly flightsResource = httpResource<Flight[]>(
-    () => {
-      const query = this.query();
-      return query
-        ? { url: 'https://demo.angulararchitects.io/api/flight', params: { ...query } }
-        : undefined;
-    },
-    { defaultValue: [] },
-  );
+  private readonly flightService = inject(FlightService);
+  protected readonly flightsResource = this.flightService.createSearchResource(this.query);
 
   protected search(): void {
     const from = this.searchModel().from.trim();
@@ -65,14 +56,12 @@ export class FlightSearch {
     this.message.set('');
     this.saveError.set('');
     try {
-      const saved = await firstValueFrom(
-        this.http.post<Flight>('https://demo.angulararchitects.io/api/flight', this.draft()),
-      );
+      const saved = await firstValueFrom(this.flightService.save(this.draft()));
       this.draft.set({ ...saved });
       this.selectedFlight.set(saved);
       if (this.flightsResource.hasValue()) {
-        this.flightsResource.value.update((flights) =>
-          flights.map((flight) => (flight.id === saved.id ? saved : flight)),
+        this.flightsResource.value.update(flights =>
+          flights.map(flight => (flight.id === saved.id ? saved : flight)),
         );
       }
       this.message.set('Update successful!');

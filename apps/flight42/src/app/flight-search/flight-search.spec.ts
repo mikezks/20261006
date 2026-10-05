@@ -28,7 +28,7 @@ describe('Flight search', () => {
     await fixture.whenStable();
     const screen = page.getByTestId('intro-search');
     await screen.getByRole('button', { name: 'Search', exact: true }).click();
-    const request = await vi.waitFor(() => http.expectOne((req) => req.method === 'GET'));
+    const request = await vi.waitFor(() => http.expectOne(req => req.method === 'GET'));
     request.flush([{ ...flight }]);
     await fixture.whenStable();
     return { fixture, screen };
@@ -48,11 +48,11 @@ describe('Flight search', () => {
       'form[aria-label="Flight Search"]',
     )!;
     let prevented = false;
-    searchForm.addEventListener('submit', (event) => {
+    searchForm.addEventListener('submit', event => {
       prevented = event.defaultPrevented;
     });
     await userEvent.keyboard('{Enter}');
-    const request = await vi.waitFor(() => http.expectOne((req) => req.method === 'GET'));
+    const request = await vi.waitFor(() => http.expectOne(req => req.method === 'GET'));
     expect(request.request.params.get('from')).toBe('Vienna');
     expect(request.request.params.get('to')).toBe('Paris');
     expect(prevented).toBe(true);
@@ -87,7 +87,7 @@ describe('Flight search', () => {
     const editor = screen.getByRole('form', { name: 'Flight Edit' });
     await editor.getByLabelText('From:', { exact: true }).fill('Vienna');
     await editor.getByRole('button', { name: 'Save', exact: true }).click();
-    const request = await vi.waitFor(() => http.expectOne((req) => req.method === 'POST'));
+    const request = await vi.waitFor(() => http.expectOne(req => req.method === 'POST'));
     expect(request.request.url).toBe('https://demo.angulararchitects.io/api/flight');
     expect(request.request.body).toEqual({ ...flight, from: 'Vienna' });
     const repeatedSubmit = new Event('submit', { bubbles: true, cancelable: true });
@@ -95,7 +95,7 @@ describe('Flight search', () => {
       .querySelector('form[aria-labelledby="flight-edit-title"]')!
       .dispatchEvent(repeatedSubmit);
     expect(repeatedSubmit.defaultPrevented).toBe(true);
-    http.expectNone((req) => req.method === 'POST');
+    http.expectNone(req => req.method === 'POST');
     await expect.element(editor.getByRole('button', { name: 'Saving…' })).toBeDisabled();
     await expect
       .element(screen.getByRole('button', { name: 'Search', exact: true }))
@@ -119,7 +119,7 @@ describe('Flight search', () => {
     const editor = screen.getByRole('form', { name: 'Flight Edit' });
     await editor.getByLabelText('To:', { exact: true }).fill('Paris');
     await editor.getByRole('button', { name: 'Save', exact: true }).click();
-    (await vi.waitFor(() => http.expectOne((req) => req.method === 'POST'))).flush('Unavailable', {
+    (await vi.waitFor(() => http.expectOne(req => req.method === 'POST'))).flush('Unavailable', {
       status: 503,
       statusText: 'Unavailable',
     });
@@ -130,7 +130,7 @@ describe('Flight search', () => {
     await expect.element(editor.getByLabelText('To:', { exact: true })).toHaveValue('Paris');
     await expect.element(screen.getByRole('cell', { name: 'Graz', exact: true })).toBeVisible();
     await editor.getByRole('button', { name: 'Save', exact: true }).click();
-    const retry = await vi.waitFor(() => http.expectOne((req) => req.method === 'POST'));
+    const retry = await vi.waitFor(() => http.expectOne(req => req.method === 'POST'));
     expect(retry.request.body).toEqual({ ...flight, to: 'Paris' });
     retry.flush({ ...flight, to: 'Paris' });
     await fixture.whenStable();

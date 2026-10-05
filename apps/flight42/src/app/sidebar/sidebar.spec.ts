@@ -6,7 +6,7 @@ describe('Sidebar', () => {
     const fixture = TestBed.createComponent(Sidebar);
     await fixture.whenStable();
     const element: HTMLElement = fixture.nativeElement;
-    expect(Array.from(element.querySelectorAll('.nav p'), (p) => p.textContent?.trim())).toEqual([
+    expect(Array.from(element.querySelectorAll('.nav p'), p => p.textContent?.trim())).toEqual([
       'Home',
       'Flights',
       'Passengers',
