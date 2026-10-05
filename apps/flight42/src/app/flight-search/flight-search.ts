@@ -1,13 +1,13 @@
 import { firstValueFrom } from 'rxjs';
-import { DatePipe } from '@angular/common';
-import { FlightService } from './flight-service';
-import { Component, inject, signal } from '@angular/core';
 import { FormField, FormRoot, form } from '@angular/forms/signals';
+import { FlightCard } from '../flight-card/flight-card';
+import { FlightService } from './flight-service';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Flight, FlightFilter, initialFlight } from '../model/flight';
 
 @Component({
   selector: 'app-flight-search',
-  imports: [DatePipe, FormField, FormRoot],
+  imports: [FlightCard, FormField, FormRoot],
   templateUrl: './flight-search.html',
   styleUrl: './flight-search.scss',
 })
@@ -17,6 +17,14 @@ export class FlightSearch {
     submission: { action: async () => this.search() },
   });
   protected readonly query = signal<FlightFilter | undefined>(undefined);
+  protected readonly basket = signal<Record<number, boolean>>({});
+  protected readonly flightRoute = computed(
+    () => `From ${this.searchModel().from} to ${this.searchModel().to}.`,
+  );
+  protected readonly selectedCount = computed(
+    () => Object.values(this.basket()).filter(Boolean).length,
+  );
+
   protected readonly selectedFlight = signal<Flight | undefined>(undefined);
   protected readonly draft = signal<Flight>({ ...initialFlight });
   protected readonly editForm = form(this.draft, {
@@ -27,6 +35,7 @@ export class FlightSearch {
   });
   protected readonly message = signal('');
   protected readonly saveError = signal('');
+
   private readonly flightService = inject(FlightService);
   protected readonly flightsResource = this.flightService.createSearchResource(this.query);
 
@@ -40,7 +49,24 @@ export class FlightSearch {
     this.query.set({ from, to });
   }
 
-  protected select(flight: Flight): void {
+  constructor() {
+    // Component effects run during Angular synchronization; use them for side effects.
+    effect(() => console.log(this.flightRoute()));
+  }
+
+  protected updateBasket(id: number, selected: boolean): void {
+    this.basket.update(basket => ({ ...basket, [id]: selected }));
+  }
+
+  protected delay(flight: Flight): void {
+    if (!this.flightsResource.hasValue()) return;
+    const date = new Date(new Date(flight.date).getTime() + 5 * 60 * 1000).toISOString();
+    this.flightsResource.value.update(flights =>
+      flights.map(item => (item.id === flight.id ? { ...item, date, delayed: true } : item)),
+    );
+  }
+
+  protected edit(flight: Flight): void {
     if (this.editForm().submitting()) return;
     const selected = this.selectedFlight()?.id === flight.id ? undefined : flight;
     this.selectedFlight.set(selected);
