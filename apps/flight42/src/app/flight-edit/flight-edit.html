@@ -1,0 +1,75 @@
+<form [formRoot]="editForm">
+  <p>Flight No.: {{ flight().id }}</p>
+  <div class="form-group">
+    <label for="edit-from">From</label>
+    <input
+      id="edit-from"
+      class="form-control"
+      [formField]="editForm.from"
+      aria-describedby="from-errors"
+    />
+    <div id="from-errors" class="field-error" aria-live="polite">
+      @if (editForm.from().touched()) {
+        @for (error of editForm.from().errors(); track $index) {
+          <p>{{ error.message }}</p>
+        }
+      }
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="edit-to">To</label>
+    <input
+      id="edit-to"
+      class="form-control"
+      [formField]="editForm.to"
+      aria-describedby="to-errors"
+    />
+    <div id="to-errors" class="field-error" aria-live="polite">
+      @if (editForm.to().touched()) {
+        @for (error of editForm.to().errors(); track $index) {
+          <p>{{ error.message }}</p>
+        }
+      }
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="edit-date">Date (ISO 8601)</label>
+    <input
+      id="edit-date"
+      class="form-control"
+      [formField]="editForm.date"
+      aria-describedby="date-errors"
+    />
+    <div id="date-errors" class="field-error" aria-live="polite">
+      @if (editForm.date().touched()) {
+        @for (error of editForm.date().errors(); track $index) {
+          <p>{{ error.message }}</p>
+        }
+      }
+    </div>
+  </div>
+  <div class="form-group">
+    <label><input type="checkbox" [formField]="editForm.delayed" /> Delayed</label>
+  </div>
+  @for (error of editForm().errors(); track $index) {
+    <p class="field-error" role="alert">{{ error.message }}</p>
+  }
+  @if (saveError()) {
+    <p class="field-error" role="alert">{{ saveError() }}</p>
+  }
+  <button
+    type="submit"
+    class="btn btn-default"
+    [disabled]="editForm().invalid() || editForm().pending() || editForm().submitting()"
+  >
+    {{ editForm().submitting() ? 'Saving…' : 'Save' }}
+  </button>
+  <button
+    type="button"
+    class="btn btn-default"
+    [disabled]="editForm().submitting()"
+    (click)="cancelled.emit()"
+  >
+    Cancel
+  </button>
+</form>

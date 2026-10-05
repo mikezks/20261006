@@ -16,9 +16,7 @@
       <div class="form-group">
         <button
           type="submit"
-          [disabled]="
-            !searchModel().from.trim() || !searchModel().to.trim() || editForm().submitting()
-          "
+          [disabled]="!searchModel().from.trim() || !searchModel().to.trim()"
           class="btn btn-default"
         >
           Search
@@ -65,48 +63,3 @@
   <p>No flights found.</p>
 }
 <p>Selected flights: {{ selectedCount() }}</p>
-
-@if (selectedFlight()) {
-  <div class="card">
-    <div class="card-header">
-      <h2 id="flight-edit-title" class="card-title">Flight Edit</h2>
-    </div>
-    <div class="card-body">
-      @if (message()) {
-        <div class="alert alert-primary" role="status">{{ message() }}</div>
-      }
-      @if (saveError()) {
-        <div class="alert alert-danger" role="alert">{{ saveError() }}</div>
-      }
-      <form [formRoot]="editForm" aria-labelledby="flight-edit-title">
-        <fieldset [disabled]="editForm().submitting()">
-          <div class="form-group">
-            <label for="edit-id">ID:</label>
-            <input id="edit-id" type="number" [formField]="editForm.id" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="edit-from">From:</label>
-            <input id="edit-from" [formField]="editForm.from" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="edit-to">To:</label>
-            <input id="edit-to" [formField]="editForm.to" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="edit-date">Date:</label>
-            <input id="edit-date" [formField]="editForm.date" class="form-control" />
-          </div>
-          <div class="form-group">
-            <input id="edit-delayed" type="checkbox" [formField]="editForm.delayed" />
-            <label for="edit-delayed">Delayed</label>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default" [disabled]="editForm().submitting()">
-              {{ editForm().submitting() ? 'Saving…' : 'Save' }}
-            </button>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-}
