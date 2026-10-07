@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Headerbar } from './headerbar/headerbar';
 import { Sidebar } from './sidebar/sidebar';
 
@@ -8,4 +8,10 @@ import { Sidebar } from './sidebar/sidebar';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  protected readonly title = signal('Hello World!');
+
+  changeGreeting(): void {
+    this.title.set('Hello Angular!');
+  }
+}
