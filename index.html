@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>My First HMTL Web App</title>
+  </head>
+  <style>
+    .headline {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 48px;
+      color: purple;
+      border: 3px dashed lightsalmon;
+      padding: 30px;
+      margin: 30px;
+    }
+  </style>
+  <script>
+    console.log('Wir sind heute in Graz!')
+    setTimeout(() => {
+      console.log(
+        document.getElementById('hw')
+      );
+    }, 5_000);
+
+    function logState() {
+      event.preventDefault();
+      console.log('Form Button clicked!');
+    }
+  </script>
+  <body>
+    <h1 id="hw" class="headline">Hello World! :)</h1>
+    <form>
+      <input>
+      <button onclick="logState()">Send</button>
+    </form>
+  </body>
+</html>
