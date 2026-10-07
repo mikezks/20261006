@@ -14,3 +14,13 @@ export const initialFlight: Flight = {
   date: new Date().toISOString(),
   delayed: false
 };
+
+export interface FlightFilter {
+  from: string;
+  to: string;
+}
+
+export const initialFlightFilter: FlightFilter = {
+  from: '',
+  to: ''
+}
