@@ -1,9 +1,8 @@
-import { firstValueFrom, map, timer } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { HttpClient, httpResource } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormField, FormRoot, form } from '@angular/forms/signals';
+import { firstValueFrom } from 'rxjs';
 import { Flight, FlightFilter, initialFlight } from '../model/flight';
 import { FlightService } from './flight-service';
 
@@ -37,15 +36,6 @@ export class FlightSearch {
 
   protected readonly flightsResource = this.flightService.createFlightResource(this.query);
 
-  constructor() {
-    /* timer(0, 2_000).pipe(
-      map(value => value * 10),
-      takeUntilDestroyed()
-    )
-      .subscribe({
-        next: counter => console.log(counter)
-      }); */
-  }
   protected search(): void {
     const from = this.searchModel().from.trim();
     const to = this.searchModel().to.trim();
@@ -71,10 +61,13 @@ export class FlightSearch {
     if (!this.selectedFlight()) return;
     this.message.set('');
     this.saveError.set('');
+
+    this.flightService.saveFlightAsPromise(this.draft())
+      .then(flight => console.log({ flight }))
+      .catch(err => console.error(err));
+
     try {
-      const saved = await firstValueFrom(
-        this.http.post<Flight>('https://demo.angulararchitects.io/api/flight', this.draft()),
-      );
+      const saved = await this.flightService.saveFlightAsPromise(this.draft());
       this.draft.set({ ...saved });
       this.selectedFlight.set(saved);
       if (this.flightsResource.hasValue()) {
