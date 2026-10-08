@@ -5,10 +5,15 @@ import { FormField, FormRoot, form } from '@angular/forms/signals';
 import { firstValueFrom } from 'rxjs';
 import { Flight, FlightFilter, initialFlight } from '../model/flight';
 import { FlightService } from './flight-service';
+import { FlightCard } from '../flight-card/flight-card';
 
 @Component({
   selector: 'app-flight-search',
-  imports: [DatePipe, FormField, FormRoot],
+  imports: [
+    DatePipe,
+    FormField, FormRoot,
+    FlightCard
+  ],
   templateUrl: './flight-search.html',
   styleUrl: './flight-search.scss',
   // providers: [
@@ -79,5 +84,9 @@ export class FlightSearch {
     } catch {
       this.saveError.set('Error updating the flight. Please try again.');
     }
+  }
+
+  delay(flight: Flight): void {
+    console.log(flight);
   }
 }
