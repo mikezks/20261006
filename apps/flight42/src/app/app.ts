@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FlightSearch } from './flight-search/flight-search';
 import { Headerbar } from './headerbar/headerbar';
 import { Sidebar } from './sidebar/sidebar';
+import { injectUsername } from './shared/config.provider';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,6 @@ import { Sidebar } from './sidebar/sidebar';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  protected readonly username = injectUsername();
+}

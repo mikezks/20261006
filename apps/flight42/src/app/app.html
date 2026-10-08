@@ -7,6 +7,15 @@
     <app-headerbar />
 
     <div class="content" role="main">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Home</h2>
+        </div>
+        <div class="card-body">
+          <p>Username: {{ username() }}</p>
+        </div>
+      </div>
+
       <app-flight-search />
     </div>
   </div>
