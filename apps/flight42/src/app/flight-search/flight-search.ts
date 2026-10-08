@@ -1,7 +1,8 @@
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map, timer } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormField, FormRoot, form } from '@angular/forms/signals';
 import { Flight, FlightFilter, initialFlight } from '../model/flight';
 import { FlightService } from './flight-service';
@@ -11,6 +12,9 @@ import { FlightService } from './flight-service';
   imports: [DatePipe, FormField, FormRoot],
   templateUrl: './flight-search.html',
   styleUrl: './flight-search.scss',
+  // providers: [
+  //   FlightService
+  // ]
 })
 export class FlightSearch {
   protected readonly searchModel = signal({ from: 'Hamburg', to: 'Graz' });
@@ -33,6 +37,15 @@ export class FlightSearch {
 
   protected readonly flightsResource = this.flightService.createFlightResource(this.query);
 
+  constructor() {
+    /* timer(0, 2_000).pipe(
+      map(value => value * 10),
+      takeUntilDestroyed()
+    )
+      .subscribe({
+        next: counter => console.log(counter)
+      }); */
+  }
   protected search(): void {
     const from = this.searchModel().from.trim();
     const to = this.searchModel().to.trim();
